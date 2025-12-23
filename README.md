@@ -75,18 +75,6 @@ The application runs on port **8501** and is executed as a background process us
 
 ---
 
-# Repository Structure
-temp_project/
-├── data/ # raw/ and processed datasets (large raw files not committed)
-├── src/ # reusable modules (I/O, features, models)
-├── models/ # trained model artifacts (.pkl)
-├── dashboards/ # Streamlit dashboard application
-├── docs/ # proposal, reports, figures
-├── notebooks/ # EDA, preprocessing, modeling
-└── README.md # project documentation
-
----
-
 # How to Run
 ```bash
 git clone https://github.com/your-username/temp_project.git
