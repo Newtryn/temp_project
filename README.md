@@ -8,7 +8,7 @@
 ## Project Overview
 This project is an end-to-end IoT data science solution designed to predict hourly solar power generation (kW). By leveraging machine learning algorithms and cloud computing, the system aids grid operators in managing supply-demand balance efficiently.
 
-**Live Demo:** [http://[SENIN_AWS_IP_ADRESIN]:8501](http://[SENIN_AWS_IP_ADRESIN]:8501)
+**Live Demo:** [(http://13.60.26.89:8501)](http://13.60.26.89:8501)
 *(Note: Ensure the AWS Instance is running)*
 
 ## Problem Statement
