@@ -1,12 +1,12 @@
 # Solar Power Generation Forecasting System  
-### End-to-End Machine Learning Pipeline Deployed on AWS EC2
+# End-to-End Machine Learning Pipeline Deployed on AWS EC2
 
 An end-to-end machine learning project for forecasting hourly solar power generation (kW) using weather-based sensor data.  
 The system is deployed as a live Streamlit dashboard on an AWS EC2 instance.
 
 ---
 
-## 🔗 Live Demo
+# Live Demo
 **AWS EC2 + Streamlit Dashboard:**  
 http://13.60.26.89:8501  
 
@@ -14,7 +14,7 @@ http://13.60.26.89:8501
 
 ---
 
-## 📌 Project Overview
+# Project Overview
 Solar power generation is highly dependent on weather conditions and is inherently intermittent.  
 Accurate short-term forecasting is essential for maintaining grid stability, optimizing energy dispatch, and supporting energy management decisions.
 
@@ -29,7 +29,7 @@ The system uses simulated IoT weather sensor data to predict hourly solar power 
 
 ---
 
-## 🎯 Problem Statement
+# Problem Statement
 Solar energy variability poses challenges for power grid stability and operational planning.
 
 **Objective:**  
@@ -75,7 +75,7 @@ The application runs on port **8501** and is executed as a background process us
 
 ---
 
-## 🗂 Repository Structure
+# Repository Structure
 temp_project/
 ├── data/ # raw/ and processed datasets (large raw files not committed)
 ├── src/ # reusable modules (I/O, features, models)
