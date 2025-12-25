@@ -2,33 +2,174 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-# Sayfa başlığı
-st.title("Solar Power Prediction App")
+# -----------------------------
+# Load trained model
+# -----------------------------
+MODEL_PATH = "models/solar_model.pkl"
+model = joblib.load(MODEL_PATH)
 
+# -----------------------------
+# Page title & description
+# -----------------------------
+st.title("Solar Power Prediction App")
 st.write("This app predicts electricity generation of a solar power plant.")
 
-# Modeli yükle
-model = joblib.load("models/solar_model.pkl")
+# -----------------------------
+# Input sections
+# -----------------------------
 
-st.header("Weather Inputs")
+st.header("Weather Conditions")
 
-# Kullanıcıdan input al
-irradiance = st.slider("Solar Irradiance (W/m2)", 0, 1200, 500)
-temperature = st.slider("Temperature (°C)", -10, 50, 25)
-wind_speed = st.slider("Wind Speed (m/s)", 0, 20, 5)
-humidity = st.slider("Humidity (%)", 0, 100, 50)
-cloud_cover = st.slider("Cloud Cover (%)", 0, 100, 20)
+temperature = st.slider(
+    "Temperature at 2m (°C)",
+    min_value=-10.0, max_value=50.0, value=25.0
+)
 
-# Inputları dataframe yap
-input_df = pd.DataFrame({
-    "irradiance": [irradiance],
-    "temperature": [temperature],
-    "wind_speed": [wind_speed],
-    "humidity": [humidity],
-    "cloud_cover": [cloud_cover]
-})
+relative_humidity = st.slider(
+    "Relative Humidity at 2m (%)",
+    min_value=0.0, max_value=100.0, value=50.0
+)
 
-# Tahmin butonu
+pressure = st.slider(
+    "Mean Sea Level Pressure (hPa)",
+    min_value=950.0, max_value=1050.0, value=1013.0
+)
+
+precipitation = st.slider(
+    "Total Precipitation (mm)",
+    min_value=0.0, max_value=50.0, value=0.0
+)
+
+snowfall = st.slider(
+    "Snowfall Amount (mm)",
+    min_value=0.0, max_value=50.0, value=0.0
+)
+
+st.header("Cloud Coverage")
+
+total_cloud = st.slider(
+    "Total Cloud Cover (%)",
+    min_value=0.0, max_value=100.0, value=20.0
+)
+
+high_cloud = st.slider(
+    "High Cloud Cover (%)",
+    min_value=0.0, max_value=100.0, value=10.0
+)
+
+mid_cloud = st.slider(
+    "Medium Cloud Cover (%)",
+    min_value=0.0, max_value=100.0, value=15.0
+)
+
+low_cloud = st.slider(
+    "Low Cloud Cover (%)",
+    min_value=0.0, max_value=100.0, value=20.0
+)
+
+st.header("Radiation & Wind")
+
+radiation = st.slider(
+    "Shortwave Radiation (W/m²)",
+    min_value=0.0, max_value=1200.0, value=600.0
+)
+
+wind_speed_10 = st.slider(
+    "Wind Speed at 10m (m/s)",
+    min_value=0.0, max_value=25.0, value=5.0
+)
+
+wind_dir_10 = st.slider(
+    "Wind Direction at 10m (°)",
+    min_value=0.0, max_value=360.0, value=180.0
+)
+
+wind_speed_80 = st.slider(
+    "Wind Speed at 80m (m/s)",
+    min_value=0.0, max_value=30.0, value=7.0
+)
+
+wind_dir_80 = st.slider(
+    "Wind Direction at 80m (°)",
+    min_value=0.0, max_value=360.0, value=180.0
+)
+
+wind_speed_900 = st.slider(
+    "Wind Speed at 900mb (m/s)",
+    min_value=0.0, max_value=40.0, value=10.0
+)
+
+wind_dir_900 = st.slider(
+    "Wind Direction at 900mb (°)",
+    min_value=0.0, max_value=360.0, value=180.0
+)
+
+wind_gust = st.slider(
+    "Wind Gust at 10m (m/s)",
+    min_value=0.0, max_value=40.0, value=8.0
+)
+
+st.header("Solar Geometry")
+
+angle_of_incidence = st.slider(
+    "Angle of Incidence (°)",
+    min_value=0.0, max_value=90.0, value=30.0
+)
+
+zenith = st.slider(
+    "Solar Zenith Angle (°)",
+    min_value=0.0, max_value=90.0, value=40.0
+)
+
+azimuth = st.slider(
+    "Solar Azimuth Angle (°)",
+    min_value=0.0, max_value=360.0, value=180.0
+)
+
+st.header("Lag Features")
+
+power_lag_1 = st.slider("Power Lag 1 (kW)", 0.0, 1000.0, 300.0)
+power_lag_2 = st.slider("Power Lag 2 (kW)", 0.0, 1000.0, 280.0)
+power_lag_3 = st.slider("Power Lag 3 (kW)", 0.0, 1000.0, 260.0)
+
+radiation_lag_1 = st.slider(
+    "Radiation Lag 1 (W/m²)",
+    0.0, 1200.0, 550.0
+)
+
+# -----------------------------
+# Build input dataframe (EXACT order & names)
+# -----------------------------
+input_df = pd.DataFrame([{
+    "temperature_2_m_above_gnd": temperature,
+    "relative_humidity_2_m_above_gnd": relative_humidity,
+    "mean_sea_level_pressure_MSL": pressure,
+    "total_precipitation_sfc": precipitation,
+    "snowfall_amount_sfc": snowfall,
+    "total_cloud_cover_sfc": total_cloud,
+    "high_cloud_cover_high_cld_lay": high_cloud,
+    "medium_cloud_cover_mid_cld_lay": mid_cloud,
+    "low_cloud_cover_low_cld_lay": low_cloud,
+    "shortwave_radiation_backwards_sfc": radiation,
+    "wind_speed_10_m_above_gnd": wind_speed_10,
+    "wind_direction_10_m_above_gnd": wind_dir_10,
+    "wind_speed_80_m_above_gnd": wind_speed_80,
+    "wind_direction_80_m_above_gnd": wind_dir_80,
+    "wind_speed_900_mb": wind_speed_900,
+    "wind_direction_900_mb": wind_dir_900,
+    "wind_gust_10_m_above_gnd": wind_gust,
+    "angle_of_incidence": angle_of_incidence,
+    "zenith": zenith,
+    "azimuth": azimuth,
+    "power_lag_1": power_lag_1,
+    "power_lag_2": power_lag_2,
+    "power_lag_3": power_lag_3,
+    "radiation_lag_1": radiation_lag_1
+}])
+
+# -----------------------------
+# Prediction
+# -----------------------------
 if st.button("Predict Power Generation"):
     prediction = model.predict(input_df)
     st.success(f"Predicted Power Output: {prediction[0]:.2f} kW")
