@@ -9,8 +9,10 @@ The system is deployed as a live Streamlit dashboard on an AWS EC2 instance.
 # Live Demo
 **AWS EC2 + Streamlit Dashboard:**  
 http://13.60.26.89:8501  
+https://tempproject-lou43ybjq2al9pgxyti6cf.streamlit.app/
+> Note: The application is primarily deployed on AWS EC2.
+A secondary demo version is available via Streamlit Cloud for quick access.
 
-> Note: The EC2 instance must be running to access the dashboard.
 
 ---
 
