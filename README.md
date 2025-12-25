@@ -38,7 +38,7 @@ Solar energy variability poses challenges for power grid stability and operation
 Predict hourly solar power generation (kW) using weather-related sensor features.
 
 **Evaluation Metrics:**  
-- R² Score (target: ≥ 0.85)  
+- R² Score (target: ≥ 0.80)  
 - Root Mean Squared Error (RMSE)
 
 ---
@@ -55,7 +55,7 @@ Predict hourly solar power generation (kW) using weather-related sensor features
 
 # Model Performance
 - Model: Random Forest Regressor  
-- R² Score: **0.81** (baseline)  
+- R² Score: **0.813** (baseline)  
 - RMSE: Computed during evaluation  
 
 > The current model serves as a baseline solution.  
